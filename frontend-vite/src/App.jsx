@@ -1,6 +1,9 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage.jsx";
+import PricingPage from "./pages/PricingPage.jsx";
+import FeaturesPage from "./pages/FeaturesPage.jsx";
+import ContactPage from "./pages/ContactPage.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import OwnerDashboard from "./pages/OwnerDashboard.jsx";
 import MemberDashboard from "./pages/MemberDashboard.jsx";
@@ -34,11 +37,11 @@ function App() {
         <Route path="/register" element={user ? <Navigate to={`/${user.role}/dashboard`} replace /> : <RegisterPage />} />
 
         {/* Root Redirect */}
-        <Route path="/" element={
-          user
-            ? <Navigate to={`/${user.role}/dashboard`} replace />
-            : <Navigate to="/login" replace />
-        } />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        {/* Root Route */}
+        <Route path="/" element={<HomePage />} />
 
         {/* Owner Routes */}
         <Route path="/owner/*" element={

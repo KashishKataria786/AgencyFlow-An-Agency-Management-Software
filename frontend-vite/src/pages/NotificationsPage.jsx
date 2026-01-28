@@ -8,7 +8,7 @@ const NotificationsPage = () => {
 
     const markAsRead = async (id) => {
         try {
-            await axios.put(`http://localhost:5000/api/notifications/${id}/read`);
+            await axios.put(`${import.meta.env.VITE_API_URL}/notifications/${id}/read`);
             const updatedNotifications = notifications.map((n) =>
                 n._id === id ? { ...n, isRead: true } : n
             );
@@ -21,7 +21,7 @@ const NotificationsPage = () => {
 
     const markAllAsRead = async () => {
         try {
-            await axios.put("http://localhost:5000/api/notifications/read-all");
+            await axios.put(`${import.meta.env.VITE_API_URL}/notifications/read-all`);
             const updatedNotifications = notifications.map((n) => ({ ...n, isRead: true }));
             setNotifications(updatedNotifications);
             setUnreadCount(0);

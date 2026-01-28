@@ -28,7 +28,7 @@ const InvoiceView = () => {
 
     const fetchInvoice = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/api/invoices/${id}`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/invoices/${id}`);
             setInvoice(data);
             setLoading(false);
         } catch (err) {

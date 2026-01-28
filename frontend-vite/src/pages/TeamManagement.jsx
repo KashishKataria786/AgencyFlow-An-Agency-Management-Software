@@ -30,7 +30,7 @@ const TeamManagement = () => {
 
     const fetchMembers = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/team");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/team`);
             setMembers(data);
             setLoading(false);
         } catch (err) {
@@ -41,7 +41,7 @@ const TeamManagement = () => {
 
     const fetchClients = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/clients");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/clients`);
             setClients(data);
         } catch (err) { }
     };
@@ -54,7 +54,7 @@ const TeamManagement = () => {
     const handleAddMember = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/api/team", newMember);
+            await axios.post(`${import.meta.env.VITE_API_URL}/team`, newMember);
             setShowAddModal(false);
             setNewMember({ name: "", email: "", password: "", role: "member", clientId: "" });
             fetchMembers();
@@ -66,7 +66,7 @@ const TeamManagement = () => {
     const handleUpdateMember = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/api/team/${showEditModal._id}`, editData);
+            await axios.put(`${import.meta.env.VITE_API_URL}/team/${showEditModal._id}`, editData);
             setShowEditModal(null);
             fetchMembers();
         } catch (err) {
@@ -76,7 +76,7 @@ const TeamManagement = () => {
 
     const handleStatusToggle = async (id, currentStatus) => {
         try {
-            await axios.put(`http://localhost:5000/api/team/${id}/status`, { isActive: !currentStatus });
+            await axios.put(`${import.meta.env.VITE_API_URL}/team/${id}/status`, { isActive: !currentStatus });
             fetchMembers();
         } catch (err) {
             setError("Failed to update status");
@@ -86,7 +86,7 @@ const TeamManagement = () => {
     const handleChangePassword = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/api/team/${showPasswordModal}/password`, { newPassword });
+            await axios.put(`${import.meta.env.VITE_API_URL}/team/${showPasswordModal}/password`, { newPassword });
             setShowPasswordModal(null);
             setNewPassword("");
             alert("Password updated successfully");
@@ -98,7 +98,7 @@ const TeamManagement = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to remove this member?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/team/${id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/team/${id}`);
                 fetchMembers();
             } catch (err) {
                 setError("Failed to delete member");

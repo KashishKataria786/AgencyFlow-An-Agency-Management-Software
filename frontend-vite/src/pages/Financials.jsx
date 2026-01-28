@@ -36,7 +36,7 @@ const Financials = () => {
 
     const fetchInvoices = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/invoices");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/invoices`);
             setInvoices(data);
             setLoading(false);
         } catch (err) {
@@ -47,7 +47,7 @@ const Financials = () => {
 
     const fetchProjects = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/projects");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/projects`);
             setProjects(data);
         } catch (err) { }
     };
@@ -60,7 +60,7 @@ const Financials = () => {
     const handleCreateInvoice = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/api/invoices", formData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/invoices`, formData);
             setShowAddModal(false);
             setFormData({ projectId: "", amount: 0, dueDate: "", notes: "", items: [{ description: "", quantity: 1, price: 0 }] });
             fetchInvoices();
@@ -71,7 +71,7 @@ const Financials = () => {
 
     const updateStatus = async (id, status) => {
         try {
-            await axios.put(`http://localhost:5000/api/invoices/${id}/status`, { status });
+            await axios.put(`${import.meta.env.VITE_API_URL}/invoices/${id}/status`, { status });
             fetchInvoices();
         } catch (err) {
             setError("Failed to update status");
@@ -81,7 +81,7 @@ const Financials = () => {
     const deleteInvoice = async (id) => {
         if (window.confirm("Are you sure you want to remove this financial record?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/invoices/${id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/invoices/${id}`);
                 fetchInvoices();
             } catch (err) {
                 setError("Failed to delete invoice");

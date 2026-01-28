@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const { data } = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
             setUser(data.user);
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (userData) => {
         try {
-            await axios.post("http://localhost:5000/api/auth/register", userData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, userData);
             return { success: true };
         } catch (error) {
             return { success: false, message: error.response?.data?.message || "Registration failed" };

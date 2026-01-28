@@ -27,8 +27,8 @@ const MyTasks = () => {
     const fetchTasks = async () => {
         try {
             const [tRes, pRes] = await Promise.all([
-                axios.get("http://localhost:5000/api/tasks"),
-                axios.get("http://localhost:5000/api/projects")
+                axios.get(`${import.meta.env.VITE_API_URL}/tasks`),
+                axios.get(`${import.meta.env.VITE_API_URL}/projects`)
             ]);
             setTasks(tRes.data);
             setProjects(pRes.data);

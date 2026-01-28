@@ -15,7 +15,7 @@ export const SocketProvider = ({ children }) => {
     useEffect(() => {
         if (user) {
             const token = localStorage.getItem("token");
-            const newSocket = io("http://localhost:5000", {
+            const newSocket = io(`${import.meta.env.VITE_SOCKET}`, {
                 auth: { token },
             });
 
@@ -24,7 +24,7 @@ export const SocketProvider = ({ children }) => {
             // Fetch initial notifications
             const fetchNotifications = async () => {
                 try {
-                    const { data } = await axios.get("http://localhost:5000/api/notifications");
+                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/notifications`);
                     setNotifications(data);
                     setUnreadCount(data.filter(n => !n.isRead).length);
                 } catch (error) {

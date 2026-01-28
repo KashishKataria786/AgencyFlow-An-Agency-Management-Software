@@ -20,7 +20,7 @@ const ClientInvoices = () => {
 
     const fetchInvoices = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/invoices");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/invoices`);
             setInvoices(data);
             setLoading(false);
         } catch (err) {

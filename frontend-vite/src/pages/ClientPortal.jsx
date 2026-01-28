@@ -24,9 +24,9 @@ const ClientPortal = () => {
     const fetchData = async () => {
         try {
             const [projectsRes, tasksRes, invoicesRes] = await Promise.all([
-                axios.get("http://localhost:5000/api/projects"),
-                axios.get("http://localhost:5000/api/tasks"),
-                axios.get("http://localhost:5000/api/invoices")
+                axios.get(`${import.meta.env.VITE_API_URL}/projects`),
+                axios.get(`${import.meta.env.VITE_API_URL}/tasks`),
+                axios.get(`${import.meta.env.VITE_API_URL}/invoices`)
             ]);
             setProjects(projectsRes.data);
             setTasks(tasksRes.data);

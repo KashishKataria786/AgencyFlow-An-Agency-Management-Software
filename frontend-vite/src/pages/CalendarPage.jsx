@@ -33,7 +33,7 @@ const CalendarPage = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const { data } = await axios.get("http://localhost:5000/api/tasks");
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
                 setTasks(data);
 
                 const calendarEvents = data.map(task => ({

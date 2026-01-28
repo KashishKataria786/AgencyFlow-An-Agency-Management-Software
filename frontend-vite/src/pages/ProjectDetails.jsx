@@ -44,13 +44,13 @@ const ProjectDetails = () => {
     const fetchData = async () => {
         try {
             const [pRes, tRes] = await Promise.all([
-                axios.get(`http://localhost:5000/api/projects/${id}`),
-                axios.get(`http://localhost:5000/api/tasks?projectId=${id}`)
+                axios.get(`${import.meta.env.VITE_API_URL}/projects/${id}`),
+                axios.get(`${import.meta.env.VITE_API_URL}/tasks?projectId=${id}`)
             ]);
 
             if (user?.role === 'owner') {
                 try {
-                    const teamRes = await axios.get(`http://localhost:5000/api/team`);
+                    const teamRes = await axios.get(`${import.meta.env.VITE_API_URL}/team`);
                     setTeam(teamRes.data);
                 } catch (e) {
                     console.error("Failed to fetch team", e);
@@ -77,7 +77,7 @@ const ProjectDetails = () => {
     const handleCreateTask = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/api/tasks", { ...taskForm, projectId: id });
+            await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, { ...taskForm, projectId: id });
             setShowTaskModal(false);
             setTaskForm({ title: "", description: "", assignedTo: [], priority: "medium", dueDate: "", projectId: id });
             fetchData();
@@ -88,7 +88,7 @@ const ProjectDetails = () => {
 
     const handleUpdateStatus = async (taskId, status) => {
         try {
-            await axios.put(`http://localhost:5000/api/tasks/${taskId}`, { status });
+            await axios.put(`${import.meta.env.VITE_API_URL}/tasks/${taskId}`, { status });
             fetchData();
             if (selectedTask?._id === taskId) {
                 const updatedTask = tasks.find(t => t._id === taskId);
@@ -103,11 +103,11 @@ const ProjectDetails = () => {
         e.preventDefault();
         if (!newComment.trim()) return;
         try {
-            await axios.post(`http://localhost:5000/api/tasks/${selectedTask._id}/comments`, { content: newComment });
+            await axios.post(`${import.meta.env.VITE_API_URL}/tasks/${selectedTask._id}/comments`, { content: newComment });
             setNewComment("");
             fetchData();
             // Refetch current task to show new comment
-            const { data } = await axios.get(`http://localhost:5000/api/tasks?projectId=${id}`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/tasks?projectId=${id}`);
             setSelectedTask(data.find(t => t._id === selectedTask._id));
         } catch (err) {
             setError("Communication link failed");
@@ -117,7 +117,7 @@ const ProjectDetails = () => {
     const handleDeleteProject = async () => {
         if (window.confirm("CRITICAL: DATA REMOVAL. Are you sure?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/projects/${id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/projects/${id}`);
                 navigate("/owner/projects");
             } catch (err) {
                 setError("Deletion sequence interrupted");

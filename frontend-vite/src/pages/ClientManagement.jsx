@@ -26,7 +26,7 @@ const ClientManagement = () => {
 
     const fetchClients = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/clients");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/clients`);
             setClients(data);
             setLoading(false);
         } catch (err) {
@@ -43,9 +43,9 @@ const ClientManagement = () => {
         e.preventDefault();
         try {
             if (editingClient) {
-                await axios.put(`http://localhost:5000/api/clients/${editingClient._id}`, formData);
+                await axios.put(`${import.meta.env.VITE_API_URL}/clients/${editingClient._id}`, formData);
             } else {
-                await axios.post("http://localhost:5000/api/clients", formData);
+                await axios.post(`${import.meta.env.VITE_API_URL}/clients`, formData);
             }
             setShowModal(false);
             setEditingClient(null);
@@ -59,7 +59,7 @@ const ClientManagement = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this client?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/clients/${id}`);
+                await axios.delete(`${import.meta.env.VITE_API_URL}/clients/${id}`);
                 fetchClients();
             } catch (err) {
                 setError("Failed to delete client");

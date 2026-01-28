@@ -26,7 +26,7 @@ const Projects = () => {
 
     const fetchProjects = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/projects");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/projects`);
             setProjects(data);
             setLoading(false);
         } catch (err) {
@@ -37,7 +37,7 @@ const Projects = () => {
 
     const fetchClients = async () => {
         try {
-            const { data } = await axios.get("http://localhost:5000/api/clients");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/clients`);
             setClients(data);
         } catch (err) { }
     };
@@ -50,7 +50,7 @@ const Projects = () => {
     const handleCreate = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/api/projects", formData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/projects`, formData);
             setShowAddModal(false);
             setFormData({ name: "", description: "", clientId: "", budget: 0, deadline: "", status: "planning" });
             fetchProjects();

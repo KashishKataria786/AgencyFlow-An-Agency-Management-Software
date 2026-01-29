@@ -21,7 +21,7 @@ const Chat = () => {
     // Clear global unread count when chat is opened
     useEffect(() => {
         if (setUnreadChatCount) {
-             setUnreadChatCount(0);
+            setUnreadChatCount(0);
         }
     }, [setUnreadChatCount]);
 
@@ -41,18 +41,27 @@ const Chat = () => {
                 const token = localStorage.getItem("token");
                 const config = { headers: { Authorization: `Bearer ${token}` } };
                 const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/chat/users`, config);
-                setContacts(data);
-                
-                // Initialize unread map
-                const unreadMap = {};
-                data.forEach(c => {
-                    if (c.unreadCount > 0) unreadMap[c._id] = c.unreadCount;
-                });
-                setUnreadContacts(unreadMap);
-                
+                console.log("Fetched contacts:", data); // Debugging
+
+                if (Array.isArray(data)) {
+                    setContacts(data);
+
+                    // Initialize unread map
+                    const unreadMap = {};
+                    data.forEach(c => {
+                        if (c.unreadCount > 0) unreadMap[c._id] = c.unreadCount;
+                    });
+                    setUnreadContacts(unreadMap);
+                } else {
+                    console.error("API returned non-array data:", data);
+                    setContacts([]);
+                }
+
                 setLoadingContacts(false);
             } catch (error) {
                 console.error("Error fetching contacts", error);
+                console.error("Error details:", error.response); // Debugging
+                setContacts([]);
                 setLoadingContacts(false);
             }
         };
@@ -67,7 +76,7 @@ const Chat = () => {
             try {
                 const token = localStorage.getItem("token");
                 const config = { headers: { Authorization: `Bearer ${token}` } };
-                
+
                 // 1. Get Messages
                 const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/chat/${selectedContact._id}`, config);
                 setMessages(data);
@@ -76,7 +85,7 @@ const Chat = () => {
                 // 2. Mark as Read if we have unread
                 if (unreadContacts[selectedContact._id]) {
                     await axios.put(`${import.meta.env.VITE_API_URL}/chat/read`, { senderId: selectedContact._id }, config);
-                    
+
                     // Clear local unread
                     setUnreadContacts(prev => {
                         const newMap = { ...prev };
@@ -101,10 +110,10 @@ const Chat = () => {
 
             // If chat is open with this person
             if (selectedContact && senderId === selectedContact._id) {
-                 setMessages((prev) => [...prev, message]);
-                 // Optionally mark as read immediately if window is focused, but easiest is just to let the user see it.
-                 // Ideally we'd ping the backend "read" again or just leave it since we are "watching".
-                 // For now, let's assume if it arrives while open, it's effectively read or will be read.
+                setMessages((prev) => [...prev, message]);
+                // Optionally mark as read immediately if window is focused, but easiest is just to let the user see it.
+                // Ideally we'd ping the backend "read" again or just leave it since we are "watching".
+                // For now, let's assume if it arrives while open, it's effectively read or will be read.
             } else {
                 // Chat not open with this person -> Increment unread
                 setUnreadContacts(prev => ({
@@ -136,7 +145,7 @@ const Chat = () => {
         // Optimistically update UI
         const optimisticMessage = {
             _id: Date.now().toString(), // Temp ID
-            sender: user.id, 
+            sender: user.id,
             receiver: selectedContact._id,
             content: newMessage,
             createdAt: new Date().toISOString()
@@ -224,8 +233,8 @@ const Chat = () => {
                                     <div key={msg._id || index} className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
                                         <div
                                             className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm ${isMyMessage
-                                                    ? 'bg-emerald-600 text-white rounded-br-none shadow-md shadow-emerald-600/10'
-                                                    : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none shadow-sm'
+                                                ? 'bg-emerald-600 text-white rounded-br-none shadow-md shadow-emerald-600/10'
+                                                : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none shadow-sm'
                                                 }`}
                                         >
                                             <p>{msg.content}</p>

@@ -13,7 +13,8 @@ import {
     ChevronLeft,
     ChevronRight,
     Search,
-    MessageSquare
+    MessageSquare,
+    TrendingUp
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useSocket } from "../../context/SocketContext";
@@ -34,6 +35,7 @@ const Sidebar = ({ role }) => {
         { name: "Tasks", icon: <CheckSquare size={20} />, path: "/owner/tasks" },
         { name: "Financials", icon: <FileText size={20} />, path: "/owner/financials" },
         { name: "Team", icon: <Users size={20} />, path: "/owner/team" },
+        { name: "Capacity", icon: <TrendingUp size={20} />, path: "/owner/capacity" },
         { name: "Chat", icon: <MessageSquare size={20} />, count: unreadChatCount, path: "/owner/chat" },
         { name: "Calendar", icon: <Calendar size={20} />, path: "/owner/calendar" },
         { name: "Settings", icon: <Settings size={20} />, path: "/owner/settings" },

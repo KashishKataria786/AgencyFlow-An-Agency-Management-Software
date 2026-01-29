@@ -145,7 +145,9 @@ if (process.env.NODE_ENV !== "production") {
   httpServer.listen(PORT, () => {
     console.log(`Server started at PORT ${PORT}`.bgBlue);
     console.log("Registered Routes:");
-    app._router.stack.filter(r => r.route).map(r => console.log(`${Object.keys(r.route.methods)[0].toUpperCase()} ${r.route.path}`));
+    if (app._router && app._router.stack) {
+      app._router.stack.filter(r => r.route).map(r => console.log(`${Object.keys(r.route.methods)[0].toUpperCase()} ${r.route.path}`));
+    }
   });
 }
 

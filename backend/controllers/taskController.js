@@ -149,3 +149,108 @@ export const addComment = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getCapacityStats = async (req, res) => {
+    try {
+        // Only owners can view capacity stats
+        if (req.user.role !== "owner") {
+            return res.status(403).json({ message: "Unauthorized" });
+        }
+
+        console.log("Fetching capacity stats for agency:", req.user.agencyId);
+
+        // First, get all projects for this agency
+        const projects = await Project.find({ agencyId: req.user.agencyId });
+        const projectIds = projects.map(p => p._id);
+
+        console.log(`Found ${projects.length} projects for agency`);
+
+        // Then get all tasks for those projects
+        const tasks = await Task.find({ projectId: { $in: projectIds } })
+            .populate("assignedTo", "name email")
+            .populate("projectId", "name");
+
+        console.log(`Found ${tasks.length} tasks for agency`);
+
+        // Group tasks by team member
+        const capacityMap = {};
+
+        tasks.forEach(task => {
+            // assignedTo is an array, so iterate over it
+            if (!task.assignedTo || task.assignedTo.length === 0) return;
+
+            task.assignedTo.forEach(assignee => {
+                if (!assignee) return;
+
+                const userId = assignee._id.toString();
+                if (!capacityMap[userId]) {
+                    capacityMap[userId] = {
+                        user: {
+                            _id: assignee._id,
+                            name: assignee.name,
+                            email: assignee.email
+                        },
+                        totalTasks: 0,
+                        activeTasks: 0,
+                        completedTasks: 0,
+                        highPriorityTasks: 0,
+                        upcomingDeadlines: []
+                    };
+                }
+
+                capacityMap[userId].totalTasks++;
+
+                if (task.status === "done") {
+                    capacityMap[userId].completedTasks++;
+                } else {
+                    capacityMap[userId].activeTasks++;
+                }
+
+                if (task.priority === "high") {
+                    capacityMap[userId].highPriorityTasks++;
+                }
+
+                // Track upcoming deadlines (next 14 days)
+                if (task.dueDate && task.status !== "done") {
+                    const dueDate = new Date(task.dueDate);
+                    const now = new Date();
+                    const diffDays = Math.ceil((dueDate - now) / (1000 * 60 * 60 * 24));
+
+                    if (diffDays >= 0 && diffDays <= 14) {
+                        // Check if this deadline is already added for this user
+                        const existingDeadline = capacityMap[userId].upcomingDeadlines.find(
+                            d => d.taskId.toString() === task._id.toString()
+                        );
+
+                        if (!existingDeadline) {
+                            capacityMap[userId].upcomingDeadlines.push({
+                                taskId: task._id,
+                                title: task.title,
+                                dueDate: task.dueDate,
+                                priority: task.priority,
+                                projectName: task.projectId?.name
+                            });
+                        }
+                    }
+                }
+            });
+        });
+
+        console.log("Capacity map keys:", Object.keys(capacityMap));
+        console.log("Number of unique team members:", Object.keys(capacityMap).length);
+
+        // Convert to array and calculate capacity percentage
+        const capacityStats = Object.values(capacityMap).map(member => ({
+            ...member,
+            capacityPercentage: Math.min(100, (member.activeTasks / 5) * 100), // 5 tasks = 100%
+            upcomingDeadlines: member.upcomingDeadlines.sort((a, b) =>
+                new Date(a.dueDate) - new Date(b.dueDate)
+            )
+        }));
+
+        console.log("Sending capacity stats:", capacityStats.length, "members");
+        res.status(200).json(capacityStats);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

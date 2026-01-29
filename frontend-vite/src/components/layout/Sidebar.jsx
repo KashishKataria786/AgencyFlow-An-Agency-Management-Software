@@ -12,7 +12,8 @@ import {
     Calendar,
     ChevronLeft,
     ChevronRight,
-    Search
+    Search,
+    MessageSquare
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useSocket } from "../../context/SocketContext";
@@ -21,7 +22,7 @@ import { useLayout } from "../../context/LayoutContext";
 const Sidebar = ({ role }) => {
     const location = useLocation();
     const { user, logout } = useAuth();
-    const { unreadCount } = useSocket();
+    const { unreadCount, unreadChatCount } = useSocket();
     const { isSidebarCollapsed, toggleSidebar } = useLayout();
 
     const ownerLinks = [
@@ -31,6 +32,7 @@ const Sidebar = ({ role }) => {
         { name: "Tasks", icon: <CheckSquare size={20} />, path: "/owner/tasks" },
         { name: "Financials", icon: <FileText size={20} />, path: "/owner/financials" },
         { name: "Team", icon: <Users size={20} />, path: "/owner/team" },
+        { name: "Chat", icon: <MessageSquare size={20} />, count: unreadChatCount, path: "/owner/chat" },
         { name: "Calendar", icon: <Calendar size={20} />, path: "/owner/calendar" },
     ];
 
@@ -38,6 +40,7 @@ const Sidebar = ({ role }) => {
         { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/member/dashboard" },
         { name: "My Projects", icon: <Briefcase size={20} />, path: "/member/projects" },
         { name: "My Tasks", icon: <CheckSquare size={20} />, path: "/member/tasks" },
+        { name: "Chat", icon: <MessageSquare size={20} />, count: unreadChatCount, path: "/member/chat" },
         { name: "Calendar", icon: <Calendar size={20} />, path: "/member/calendar" },
     ];
 
@@ -45,6 +48,7 @@ const Sidebar = ({ role }) => {
         { name: "Our Project", icon: <Briefcase size={20} />, path: "/client/project" },
         { name: "Tasks", icon: <CheckSquare size={20} />, path: "/client/tasks" },
         { name: "Invoices", icon: <FileText size={20} />, path: "/client/invoices" },
+        { name: "Chat", icon: <MessageSquare size={20} />, count: unreadChatCount, path: "/client/chat" },
         { name: "Calendar", icon: <Calendar size={20} />, path: "/client/calendar" },
     ];
 
@@ -72,12 +76,24 @@ const Sidebar = ({ role }) => {
                         className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'space-x-3 px-2.5'} py-2.5 rounded-sm text-sm font-medium transition-all ${location.pathname === link.path
                             ? "bg-emerald-50 text-emerald-600 shadow-sm"
                             : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                            }`}
+                            } relative`}
                     >
-                        <span className={`${location.pathname === link.path ? "text-emerald-500" : "text-slate-400"} shrink-0`}>
+                        <span className={`${location.pathname === link.path ? "text-emerald-500" : "text-slate-400"} shrink-0 relative`}>
                             {link.icon}
+                            {link.count > 0 && isSidebarCollapsed && (
+                                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white"></span>
+                            )}
                         </span>
-                        {!isSidebarCollapsed && <span className="whitespace-nowrap">{link.name}</span>}
+                        {!isSidebarCollapsed && (
+                            <div className="flex-1 flex justify-between items-center">
+                                <span className="whitespace-nowrap">{link.name}</span>
+                                {link.count > 0 && (
+                                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
+                                        {link.count > 9 ? "9+" : link.count}
+                                    </span>
+                                )}
+                            </div>
+                        )}
                     </Link>
                 ))}
             </nav>

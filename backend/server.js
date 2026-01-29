@@ -48,6 +48,11 @@ app.get("/", (req, res) =>
   res.send("<h1>Agency & Client Management API</h1>")
 );
 
+import chatRoutes from "./routes/chatRoutes.js";
+import Message from "./models/Message.js";
+
+// ... existing code ...
+
 app.use("/api/auth", authRoutes);
 app.use("/api/clients", clientRoutes);
 app.use("/api/projects", projectRoutes);
@@ -55,6 +60,7 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/invoices", invoiceRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/chat", chatRoutes);
 
 import jwt from "jsonwebtoken";
 
@@ -87,6 +93,34 @@ io.on("connection", (socket) => {
   if (role === "client" && clientId) {
     socket.join(`client_${clientId}`);
   }
+
+  // Chat Message Handler
+  socket.on("send_message", async (data) => {
+    try {
+      const { receiverId, content } = data;
+
+      // Save to database
+      const newMessage = new Message({
+        sender: userId,
+        receiver: receiverId,
+        content,
+        agencyId
+      });
+      await newMessage.save();
+
+      // Populate sender details for the notification
+      await newMessage.populate("sender", "name");
+
+      // Emit to receiver
+      io.to(`user_${receiverId}`).emit("receive_message", newMessage);
+
+      // Emit back to sender (for optimistic update confirmation or just syncing other tabs)
+      // socket.emit("message_sent", newMessage); // Optional, client usually handles this optimistically
+
+    } catch (error) {
+      console.error("Error sending message via socket:", error);
+    }
+  });
 
   socket.on("disconnect", () => {
     console.log(`User disconnected: ${socket.id}`.red);

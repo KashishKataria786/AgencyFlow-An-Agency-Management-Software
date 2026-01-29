@@ -124,7 +124,7 @@ const Financials = () => {
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className="flex items-center space-x-2 bg-emerald-500 text-white px-5 py-2.5 rounded-sm text-sm font-black shadow-lg shadow-emerald-200 hover:bg-emerald-600 transition-all uppercase italic"
+                    className="flex items-center space-x-2 bg-primary text-white px-5 py-2.5 rounded-sm text-sm font-black shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all uppercase italic"
                 >
                     <Plus size={18} />
                     <span>Generate Manifest</span>
@@ -139,7 +139,7 @@ const Financials = () => {
                     </div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Settled Revenue</p>
                     <p className="text-3xl font-black text-slate-900 italic">${totalRevenue.toLocaleString()}</p>
-                    <div className="mt-4 flex items-center text-emerald-500 text-[10px] font-bold uppercase">
+                    <div className="mt-4 flex items-center text-primary text-[10px] font-bold uppercase">
                         <CheckCircle2 size={12} className="mr-1" />
                         <span>Verified Liquidity</span>
                     </div>
@@ -184,7 +184,7 @@ const Financials = () => {
                         <input
                             type="text"
                             placeholder="Filter by ID, Client or Project..."
-                            className="w-full pl-12 pr-4 py-2.5 bg-white border border-slate-200 rounded-sm text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 transition-all font-medium"
+                            className="w-full pl-12 pr-4 py-2.5 bg-white border border-slate-200 rounded-sm text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all font-medium"
                         />
                     </div>
                 </div>
@@ -226,8 +226,8 @@ const Financials = () => {
                                         <p className="text-sm font-black text-slate-900 tabular-nums">${invoice.amount.toLocaleString()}</p>
                                     </td>
                                     <td className="px-8 py-5">
-                                        <span className={`status-badge min-w-[80px] text-center ${invoice.status === 'paid' ? 'badge-green' :
-                                                invoice.status === 'overdue' ? 'badge-red' : 'badge-blue'
+                                        <span className={`status-badge min-w-[80px] text-center ${invoice.status === 'paid' ? 'badge-primary' :
+                                            invoice.status === 'overdue' ? 'badge-red' : 'badge-blue'
                                             }`}>
                                             {invoice.status}
                                         </span>
@@ -247,7 +247,7 @@ const Financials = () => {
                                             {invoice.status !== 'paid' && (
                                                 <button
                                                     onClick={() => updateStatus(invoice._id, 'paid')}
-                                                    className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-sm"
+                                                    className="p-2 text-slate-400 hover:text-primary hover:bg-primary-light rounded-sm"
                                                     title="Mark as Paid"
                                                 >
                                                     <CheckCircle2 size={18} />
@@ -273,7 +273,7 @@ const Financials = () => {
             {showAddModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
                     <div className="bg-white rounded-sm w-full max-w-2xl shadow-2xl relative border border-white/20 animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
-                        <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
+                        <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
                         <div className="p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-black text-slate-900 uppercase italic tracking-tight">Generate Billing Manifest</h2>
@@ -286,7 +286,7 @@ const Financials = () => {
                                         <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Assigned Project</label>
                                         <select
                                             required
-                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-slate-700 uppercase"
+                                            className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 font-bold text-slate-700 uppercase"
                                             value={formData.projectId}
                                             onChange={(e) => setFormData({ ...formData, projectId: e.target.value })}
                                         >
@@ -312,7 +312,7 @@ const Financials = () => {
                                         <button
                                             type="button"
                                             onClick={addItem}
-                                            className="text-[10px] font-black text-emerald-600 uppercase italic hover:underline"
+                                            className="text-[10px] font-black text-primary uppercase italic hover:underline"
                                         >
                                             + Add Item
                                         </button>
@@ -361,7 +361,7 @@ const Financials = () => {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Administrative Notes</label>
                                     <textarea
                                         rows="2"
-                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-slate-700 text-sm"
+                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 font-bold text-slate-700 text-sm"
                                         placeholder="Terms and conditions..."
                                         value={formData.notes}
                                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -373,7 +373,7 @@ const Financials = () => {
                                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Valuation</p>
                                         <p className="text-2xl font-black text-slate-900">${formData.amount.toLocaleString()}</p>
                                     </div>
-                                    <button type="submit" className="bg-slate-900 text-white font-black px-10 py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-emerald-600 transition-all">
+                                    <button type="submit" className="bg-slate-900 text-white font-black px-10 py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-primary transition-all">
                                         Deploy Invoice
                                     </button>
                                 </div>

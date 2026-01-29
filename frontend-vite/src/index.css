@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+}
+
 :root {
-  --primary: #22c55e;
-  --primary-light: #f0fdf4;
+  --primary: #9333ea;
+  --primary-hover: #7e22ce;
+  --primary-light: #f5f3ff;
   --sidebar-bg: #f8fafc;
   --main-bg: #ffffff;
   --border: #e2e8f0;
@@ -65,6 +72,11 @@ button {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.025em;
+}
+
+.badge-primary {
+  background: var(--primary-light);
+  color: var(--primary);
 }
 
 .badge-green {

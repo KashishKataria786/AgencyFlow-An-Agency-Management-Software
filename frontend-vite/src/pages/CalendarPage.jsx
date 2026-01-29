@@ -68,7 +68,7 @@ const CalendarPage = () => {
         }
 
         if (event.resource.status === 'done') {
-            backgroundColor = "#10b981"; // green
+            backgroundColor = "var(--primary)";
         }
 
         return {

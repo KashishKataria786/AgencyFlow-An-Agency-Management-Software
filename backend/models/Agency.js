@@ -15,7 +15,10 @@ const agencySchema = new mongoose.Schema(
         settings: {
             currency: { type: String, default: "USD" },
             logo: { type: String },
-            brandColor: { type: String, default: "#000000" }
+            brandColor: { type: String, default: "#000000" },
+            secondaryColor: { type: String, default: "#333333" },
+            favicon: { type: String },
+            website: { type: String }
         }
     },
     { timestamps: true }

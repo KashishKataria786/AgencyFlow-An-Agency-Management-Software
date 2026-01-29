@@ -78,7 +78,7 @@ const Projects = () => {
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className="flex items-center space-x-2 bg-emerald-500 text-white px-5 py-2.5 rounded-sm text-sm font-black shadow-lg shadow-emerald-200 hover:bg-emerald-600 transition-all uppercase italic"
+                    className="flex items-center space-x-2 bg-primary text-white px-5 py-2.5 rounded-sm text-sm font-black shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all uppercase italic"
                 >
                     <Plus size={18} />
                     <span>Initialize Project</span>
@@ -107,9 +107,9 @@ const Projects = () => {
                     <Link
                         key={project._id}
                         to={`/owner/projects/${project._id}`}
-                        className="bg-white border border-slate-200 rounded-sm shadow-sm p-6 hover:border-emerald-500 transition-all group relative overflow-hidden"
+                        className="bg-white border border-slate-200 rounded-sm shadow-sm p-6 hover:border-primary transition-all group relative overflow-hidden"
                     >
-                        <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="absolute top-0 left-0 w-1 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
                         <div className="flex justify-between items-start mb-4">
                             <div className={`status-badge ${getStatusColor(project.status)}`}>
@@ -121,7 +121,7 @@ const Projects = () => {
                             </span>
                         </div>
 
-                        <h3 className="text-lg font-black text-slate-900 leading-tight uppercase italic mb-2 group-hover:text-emerald-600 transition-colors">
+                        <h3 className="text-lg font-black text-slate-900 leading-tight uppercase italic mb-2 group-hover:text-primary transition-colors">
                             {project.name}
                         </h3>
                         <p className="text-sm text-slate-500 font-medium line-clamp-2 mb-6 h-10">
@@ -149,7 +149,7 @@ const Projects = () => {
                                     </div>
                                 ))}
                             </div>
-                            <ChevronRight size={18} className="text-slate-300 group-hover:text-emerald-500 transition-all group-hover:translate-x-1" />
+                            <ChevronRight size={18} className="text-slate-300 group-hover:text-primary transition-all group-hover:translate-x-1" />
                         </div>
                     </Link>
                 ))}
@@ -159,7 +159,7 @@ const Projects = () => {
             {showAddModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
                     <div className="bg-white rounded-sm w-full max-w-lg shadow-2xl relative border border-white/20 animate-in fade-in zoom-in duration-200">
-                        <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
+                        <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
                         <div className="p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-black text-slate-900 uppercase italic tracking-tight">Deploy New Initiative</h2>
@@ -171,7 +171,7 @@ const Projects = () => {
                                     <input
                                         type="text"
                                         required
-                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 font-bold text-slate-700 uppercase"
+                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 font-bold text-slate-700 uppercase"
                                         placeholder="Project Title"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -181,7 +181,7 @@ const Projects = () => {
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Description</label>
                                     <textarea
                                         rows="3"
-                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 font-bold text-slate-700 text-sm"
+                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 font-bold text-slate-700 text-sm"
                                         placeholder="Strategic objectives..."
                                         value={formData.description}
                                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -235,7 +235,7 @@ const Projects = () => {
                                         </select>
                                     </div>
                                 </div>
-                                <button type="submit" className="w-full bg-slate-900 text-white font-black py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-emerald-600 transition-all">
+                                <button type="submit" className="w-full bg-slate-900 text-white font-black py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-primary transition-all">
                                     Onboard Project
                                 </button>
                             </form>

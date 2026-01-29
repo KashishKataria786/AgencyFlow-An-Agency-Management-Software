@@ -139,16 +139,16 @@ const ProjectDetails = () => {
         <div className="space-y-8 max-w-7xl mx-auto pb-20">
             {/* Project Header */}
             <div className="bg-white border border-slate-200 rounded-sm p-8 shadow-sm relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-emerald-500"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
                 <div className="flex justify-between items-start">
                     <div className="space-y-4">
-                        <button onClick={() => navigate(-1)} className="flex items-center space-x-2 text-[10px] font-black uppercase text-slate-400 hover:text-emerald-500 transition-all">
+                        <button onClick={() => navigate(-1)} className="flex items-center space-x-2 text-[10px] font-black uppercase text-slate-400 hover:text-primary transition-all">
                             <ChevronLeft size={14} />
                             <span>Go back to directory</span>
                         </button>
                         <div>
                             <div className="flex items-center space-x-3 mb-2">
-                                <span className="badge-green uppercase text-[10px] font-black tracking-widest px-2 py-0.5 rounded-sm">{project.status}</span>
+                                <span className="badge-primary uppercase text-[10px] font-black tracking-widest px-2 py-0.5 rounded-sm">{project.status}</span>
                                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ID: {id.slice(-6)}</span>
                             </div>
                             <h1 className="text-3xl font-black text-slate-900 tracking-tight uppercase italic">{project.name}</h1>
@@ -166,21 +166,21 @@ const ProjectDetails = () => {
                     <div>
                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Assigned Client</p>
                         <p className="text-xs font-black text-slate-900 uppercase italic flex items-center">
-                            <User size={12} className="mr-1.5 text-emerald-500" />
+                            <User size={12} className="mr-1.5 text-primary" />
                             {project.clientId?.company || 'N/A'}
                         </p>
                     </div>
                     <div>
                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Total Budget</p>
                         <p className="text-xs font-black text-slate-900 uppercase italic flex items-center">
-                            <CheckCircle2 size={12} className="mr-1.5 text-emerald-500" />
+                            <CheckCircle2 size={12} className="mr-1.5 text-primary" />
                             ${project.budget?.toLocaleString() || '0.00'}
                         </p>
                     </div>
                     <div>
                         <p className="text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Timeline Hard Reset</p>
                         <p className="text-xs font-black text-slate-900 uppercase italic flex items-center">
-                            <Calendar size={12} className="mr-1.5 text-emerald-500" />
+                            <Calendar size={12} className="mr-1.5 text-primary" />
                             {project.deadline ? new Date(project.deadline).toLocaleDateString() : 'NO LIMIT'}
                         </p>
                     </div>
@@ -188,7 +188,7 @@ const ProjectDetails = () => {
                         <div className="flex justify-end">
                             <button
                                 onClick={() => setShowTaskModal(true)}
-                                className="bg-slate-900 text-white px-6 py-3 rounded-sm text-[10px] font-black uppercase italic tracking-widest hover:bg-emerald-600 transition-all shadow-lg active:scale-95"
+                                className="bg-slate-900 text-white px-6 py-3 rounded-sm text-[10px] font-black uppercase italic tracking-widest hover:bg-primary transition-all shadow-lg active:scale-95"
                             >
                                 Deploy New Task
                             </button>
@@ -203,7 +203,7 @@ const ProjectDetails = () => {
                     <div key={col.id} className="space-y-4">
                         <div className="flex items-center justify-between px-2">
                             <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest flex items-center">
-                                <div className={`w-1.5 h-1.5 rounded-sm mr-2 ${col.id === 'done' ? 'bg-emerald-500' : 'bg-slate-300'}`}></div>
+                                <div className={`w-1.5 h-1.5 rounded-sm mr-2 ${col.id === 'done' ? 'bg-primary' : 'bg-slate-300'}`}></div>
                                 {col.label}
                             </h3>
                             <span className="text-[10px] font-black text-slate-400 bg-slate-50 px-2 py-0.5 rounded-sm">
@@ -216,7 +216,7 @@ const ProjectDetails = () => {
                                 <div
                                     key={task._id}
                                     onClick={() => setSelectedTask(task)}
-                                    className="bg-white border border-slate-200 rounded-sm p-5 shadow-sm hover:border-emerald-500 cursor-pointer group transition-all"
+                                    className="bg-white border border-slate-200 rounded-sm p-5 shadow-sm hover:border-primary cursor-pointer group transition-all"
                                 >
                                     <div className="flex justify-between mb-3">
                                         <div className={`status-badge text-[8px] ${task.priority === 'high' ? 'badge-red' : task.priority === 'medium' ? 'badge-orange' : 'badge-blue'}`}>
@@ -229,7 +229,7 @@ const ProjectDetails = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <h4 className="text-sm font-black text-slate-900 uppercase italic group-hover:text-emerald-600 transition-colors mb-2 line-clamp-2">
+                                    <h4 className="text-sm font-black text-slate-900 uppercase italic group-hover:text-primary transition-colors mb-2 line-clamp-2">
                                         {task.title}
                                     </h4>
                                     <div className="flex items-center justify-between mt-6 pt-4 border-t border-slate-50">
@@ -297,7 +297,7 @@ const ProjectDetails = () => {
                                     </label>
                                     <div className="flex -space-x-2">
                                         {(selectedTask.assignedTo || []).map(a => (
-                                            <div key={a._id} className="w-8 h-8 bg-emerald-100 border-2 border-white rounded-sm text-xs font-black text-emerald-700 flex items-center justify-center uppercase">
+                                            <div key={a._id} className="w-8 h-8 bg-primary-light border-2 border-white rounded-sm text-xs font-black text-primary flex items-center justify-center uppercase">
                                                 {a.name.substring(0, 2)}
                                             </div>
                                         ))}
@@ -307,7 +307,7 @@ const ProjectDetails = () => {
 
                             <div className="space-y-6 pt-10 border-t border-slate-50">
                                 <h3 className="text-xs font-black text-slate-900 uppercase tracking-widest flex items-center italic">
-                                    <MessageSquare size={16} className="mr-2 text-emerald-500" />
+                                    <MessageSquare size={16} className="mr-2 text-primary" />
                                     Communication Logs
                                 </h3>
                                 <div className="space-y-4">
@@ -330,11 +330,11 @@ const ProjectDetails = () => {
                                     <input
                                         type="text"
                                         placeholder="Enter encrypted transmission..."
-                                        className="w-full pl-6 pr-16 py-4 bg-white border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-xs"
+                                        className="w-full pl-6 pr-16 py-4 bg-white border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 font-bold text-xs"
                                         value={newComment}
                                         onChange={(e) => setNewComment(e.target.value)}
                                     />
-                                    <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-slate-900 text-white rounded-sm hover:bg-emerald-600 transition-all">
+                                    <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 p-2.5 bg-slate-900 text-white rounded-sm hover:bg-primary transition-all">
                                         <Send size={16} />
                                     </button>
                                 </form>
@@ -348,7 +348,7 @@ const ProjectDetails = () => {
             {showTaskModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
                     <div className="bg-white rounded-sm w-full max-w-lg shadow-2xl relative border border-white/20 animate-in fade-in zoom-in duration-200">
-                        <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
+                        <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
                         <div className="p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-black text-slate-900 uppercase italic tracking-tight">Deploy Task Unit</h2>
@@ -360,7 +360,7 @@ const ProjectDetails = () => {
                                     <input
                                         type="text"
                                         required
-                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 font-bold text-slate-700 uppercase"
+                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 font-bold text-slate-700 uppercase"
                                         placeholder="Enter Title"
                                         value={taskForm.title}
                                         onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
@@ -393,8 +393,8 @@ const ProjectDetails = () => {
                                                     });
                                                 }}
                                                 className={`px-3 py-1.5 rounded-sm text-[10px] font-black uppercase transition-all border ${taskForm.assignedTo.includes(member._id)
-                                                    ? 'bg-emerald-500 text-white border-emerald-600'
-                                                    : 'bg-white text-slate-500 border-slate-200 hover:border-emerald-200'
+                                                    ? 'bg-primary text-white border-primary-hover'
+                                                    : 'bg-white text-slate-500 border-slate-200 hover:border-primary/20'
                                                     }`}
                                             >
                                                 {member.name}
@@ -425,7 +425,7 @@ const ProjectDetails = () => {
                                         />
                                     </div>
                                 </div>
-                                <button type="submit" className="w-full bg-slate-900 text-white font-black py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-emerald-600 transition-all">Deploy Task</button>
+                                <button type="submit" className="w-full bg-slate-900 text-white font-black py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-primary transition-all">Deploy Task</button>
                             </form>
                         </div>
                     </div>

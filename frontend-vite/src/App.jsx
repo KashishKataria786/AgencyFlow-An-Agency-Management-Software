@@ -23,6 +23,7 @@ import InvoiceView from "./pages/InvoiceView.jsx";
 import NotificationsPage from "./pages/NotificationsPage.jsx";
 import CalendarPage from "./pages/CalendarPage.jsx";
 import Chat from "./pages/Chat.jsx";
+import AgencySettings from "./pages/AgencySettings.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
 import { LayoutProvider } from "./context/LayoutContext.jsx";
@@ -59,6 +60,7 @@ function App() {
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="calendar" element={<CalendarPage />} />
               <Route path="chat" element={<Chat />} />
+              <Route path="settings" element={<AgencySettings />} />
               <Route path="*" element={<Navigate to="/owner/dashboard" replace />} />
             </Routes>
           </RoleBasedLayout>

@@ -64,7 +64,7 @@ const MyTasks = () => {
                     <input
                         type="text"
                         placeholder="Search objectives..."
-                        className="w-full pl-12 pr-4 py-2.5 bg-slate-50 border border-slate-100 rounded-sm text-sm font-bold outline-none focus:border-emerald-500/50 transition-all uppercase italic"
+                        className="w-full pl-12 pr-4 py-2.5 bg-slate-50 border border-slate-100 rounded-sm text-sm font-bold outline-none focus:border-primary/50 transition-all uppercase italic"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
@@ -75,7 +75,7 @@ const MyTasks = () => {
                             key={s}
                             onClick={() => setFilter(s)}
                             className={`px-4 py-2 rounded-sm text-[10px] font-black uppercase tracking-widest transition-all border-2 ${filter === s
-                                ? 'bg-emerald-500 text-white border-emerald-500 shadow-lg shadow-emerald-100'
+                                ? 'bg-primary text-white border-primary shadow-lg shadow-primary/10'
                                 : 'bg-white text-slate-400 border-slate-100 hover:border-slate-200'
                                 }`}
                         >
@@ -98,7 +98,7 @@ const MyTasks = () => {
                     <Link
                         key={task._id}
                         to={`/${role}/projects/${task.projectId?._id || task.projectId}`}
-                        className="bg-white border border-slate-200 rounded-sm p-6 shadow-sm hover:border-emerald-500 transition-all group relative overflow-hidden"
+                        className="bg-white border border-slate-200 rounded-sm p-6 shadow-sm hover:border-primary transition-all group relative overflow-hidden"
                     >
                         <div className="absolute top-0 right-0 p-3 opacity-10">
                             <Target size={24} className="text-slate-900" />
@@ -115,7 +115,7 @@ const MyTasks = () => {
                             </div>
                         </div>
 
-                        <h3 className="text-sm font-black text-slate-900 uppercase italic group-hover:text-emerald-600 transition-colors mb-2 line-clamp-2 leading-relaxed">
+                        <h3 className="text-sm font-black text-slate-900 uppercase italic group-hover:text-primary transition-colors mb-2 line-clamp-2 leading-relaxed">
                             {task.title}
                         </h3>
 
@@ -132,7 +132,7 @@ const MyTasks = () => {
                                         {task.comments.length}
                                     </div>
                                 )}
-                                <span className={`status-badge text-[8px] ${task.status === 'done' ? 'badge-green' : 'badge-blue'}`}>
+                                <span className={`status-badge text-[8px] ${task.status === 'done' ? 'badge-primary' : 'badge-blue'}`}>
                                     {task.status}
                                 </span>
                             </div>

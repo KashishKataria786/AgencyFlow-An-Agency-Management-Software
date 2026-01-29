@@ -48,7 +48,7 @@ const InvoiceView = () => {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <Loader2 className="animate-spin text-emerald-500" size={40} />
+                <Loader2 className="animate-spin text-primary" size={40} />
             </div>
         );
     }
@@ -94,11 +94,11 @@ const InvoiceView = () => {
             {/* Invoice Template */}
             <div className="bg-white border border-slate-200 shadow-xl rounded-sm overflow-hidden print:border-none print:shadow-none">
                 {/* Header */}
-                <div className="p-8 md:p-12 border-b-8 border-emerald-500 bg-slate-50">
+                <div className="p-8 md:p-12 border-b-8 border-primary bg-slate-50">
                     <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                         <div>
                             <div className="flex items-center space-x-2 mb-6">
-                                <div className="w-10 h-10 bg-emerald-500 rounded-sm flex items-center justify-center text-white font-black text-xl">A</div>
+                                <div className="w-10 h-10 bg-primary rounded-sm flex items-center justify-center text-white font-black text-xl">A</div>
                                 <span className="text-2xl font-black tracking-tighter text-slate-900 uppercase italic">AgencyFlow</span>
                             </div>
                             <div className="space-y-1">
@@ -115,7 +115,7 @@ const InvoiceView = () => {
                                 <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Manifest Reference</p>
                                 <p className="text-xl font-black text-slate-900 uppercase italic tabular-nums">#{invoice.invoiceNumber}</p>
                             </div>
-                            <div className={`inline-flex px-3 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest ${invoice.status === 'paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                            <div className={`inline-flex px-3 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest ${invoice.status === 'paid' ? 'bg-primary-light text-primary' : 'bg-amber-100 text-amber-700'
                                 }`}>
                                 Payment Status: {invoice.status}
                             </div>
@@ -137,7 +137,7 @@ const InvoiceView = () => {
                         <div className="space-y-2">
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Project Initiative</p>
                             <p className="font-black text-slate-900 uppercase italic flex items-center">
-                                <Briefcase size={16} className="mr-2 text-emerald-500" />
+                                <Briefcase size={16} className="mr-2 text-primary" />
                                 {invoice.projectId?.name}
                             </p>
                         </div>
@@ -190,9 +190,9 @@ const InvoiceView = () => {
                                     {invoice.notes || "No additional specialized instructions provided for this transaction."}
                                 </p>
                             </div>
-                            <div className="p-4 bg-emerald-50 rounded-sm border border-emerald-100">
-                                <p className="text-[10px] font-black text-emerald-700 uppercase tracking-widest mb-1">Payment Instruction</p>
-                                <p className="text-sm font-bold text-emerald-600 tracking-tight">Please settle this balance via wire transfer or credit facility within the specified deadline.</p>
+                            <div className="p-4 bg-primary-light rounded-sm border border-primary/20">
+                                <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">Payment Instruction</p>
+                                <p className="text-sm font-bold text-primary tracking-tight">Please settle this balance via wire transfer or credit facility within the specified deadline.</p>
                             </div>
                         </div>
                         <div className="w-full md:w-80 space-y-3">

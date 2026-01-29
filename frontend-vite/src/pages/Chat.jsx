@@ -166,7 +166,7 @@ const Chat = () => {
                         <input
                             type="text"
                             placeholder="Search contacts..."
-                            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                         />
                     </div>
                 </div>
@@ -181,9 +181,9 @@ const Chat = () => {
                             <div
                                 key={contact._id}
                                 onClick={() => setSelectedContact(contact)}
-                                className={`p-4 flex items-center space-x-3 cursor-pointer hover:bg-slate-50 transition-colors ${selectedContact?._id === contact._id ? 'bg-emerald-50 border-r-2 border-emerald-500' : ''}`}
+                                className={`p-4 flex items-center space-x-3 cursor-pointer hover:bg-slate-50 transition-colors ${selectedContact?._id === contact._id ? 'bg-primary-light border-r-2 border-primary' : ''}`}
                             >
-                                <div className="relative w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 font-semibold shrink-0">
+                                <div className="relative w-10 h-10 rounded-full bg-primary-light flex items-center justify-center text-primary font-semibold shrink-0">
                                     {contact.name.charAt(0)}
                                     {/* Unread Dot */}
                                     {unreadContacts[contact._id] > 0 && (
@@ -196,7 +196,7 @@ const Chat = () => {
                                         <p className="text-xs text-slate-500 capitalize">{contact.role}</p>
                                     </div>
                                     {unreadContacts[contact._id] > 0 && (
-                                        <div className="bg-emerald-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center">
+                                        <div className="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center">
                                             {unreadContacts[contact._id]}
                                         </div>
                                     )}
@@ -218,8 +218,8 @@ const Chat = () => {
                             </div>
                             <div>
                                 <h2 className="font-semibold text-slate-800">{selectedContact.name}</h2>
-                                <p className="text-xs text-emerald-600 flex items-center">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 inline-block"></span>
+                                <p className="text-xs text-primary flex items-center">
+                                    <span className="w-2 h-2 rounded-full bg-primary mr-1.5 inline-block"></span>
                                     Online
                                 </p>
                             </div>
@@ -233,12 +233,12 @@ const Chat = () => {
                                     <div key={msg._id || index} className={`flex ${isMyMessage ? 'justify-end' : 'justify-start'}`}>
                                         <div
                                             className={`max-w-[70%] px-4 py-2.5 rounded-2xl text-sm ${isMyMessage
-                                                ? 'bg-emerald-600 text-white rounded-br-none shadow-md shadow-emerald-600/10'
+                                                ? 'bg-primary text-white rounded-br-none shadow-md shadow-primary/10'
                                                 : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none shadow-sm'
                                                 }`}
                                         >
                                             <p>{msg.content}</p>
-                                            <p className={`text-[10px] mt-1 ${isMyMessage ? 'text-emerald-100' : 'text-slate-400'}`}>
+                                            <p className={`text-[10px] mt-1 ${isMyMessage ? 'text-primary-hover' : 'text-slate-400'}`}>
                                                 {msg.createdAt && msg.createdAt !== new Date().toISOString()
                                                     ? format(new Date(msg.createdAt), 'p')
                                                     : 'Just now'}
@@ -258,12 +258,12 @@ const Chat = () => {
                                     value={newMessage}
                                     onChange={(e) => setNewMessage(e.target.value)}
                                     placeholder="Type a message..."
-                                    className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+                                    className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                                 />
                                 <button
                                     type="submit"
                                     disabled={!newMessage.trim()}
-                                    className="bg-emerald-600 hover:bg-emerald-700 text-white p-2.5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="bg-primary hover:bg-primary-hover text-white p-2.5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     <Send size={20} />
                                 </button>

@@ -115,7 +115,7 @@ const TeamManagement = () => {
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className="flex items-center space-x-2 bg-emerald-500 text-white px-5 py-2.5 rounded-sm text-sm font-black shadow-lg shadow-emerald-200 hover:bg-emerald-600 transition-all uppercase italic"
+                    className="flex items-center space-x-2 bg-primary text-white px-5 py-2.5 rounded-sm text-sm font-black shadow-lg shadow-primary/20 hover:bg-primary-hover transition-all uppercase italic"
                 >
                     <UserPlus size={18} />
                     <span>Add Personnel</span>
@@ -137,7 +137,7 @@ const TeamManagement = () => {
                         <input
                             type="text"
                             placeholder="Search by name, email or role..."
-                            className="w-full pl-12 pr-4 py-2.5 bg-white border border-slate-200 rounded-sm text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 transition-all"
+                            className="w-full pl-12 pr-4 py-2.5 bg-white border border-slate-200 rounded-sm text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all"
                         />
                     </div>
                     <div className="flex items-center space-x-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -170,13 +170,13 @@ const TeamManagement = () => {
                                 <tr key={member._id} className="hover:bg-slate-50/80 transition-all group">
                                     <td className="px-8 py-5">
                                         <div className="flex items-center space-x-4">
-                                            <div className={`w-10 h-10 rounded-sm flex items-center justify-center font-black shadow-sm ${member.isActive ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>
+                                            <div className={`w-10 h-10 rounded-sm flex items-center justify-center font-black shadow-sm ${member.isActive ? 'bg-primary-light text-primary' : 'bg-slate-100 text-slate-400'}`}>
                                                 {member.name.substring(0, 2).toUpperCase()}
                                             </div>
                                             <div>
-                                                <p className="text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors uppercase italic">{member.name}</p>
+                                                <p className="text-sm font-black text-slate-900 group-hover:text-primary transition-colors uppercase italic">{member.name}</p>
                                                 <p className="text-[10px] font-bold text-slate-400 tracking-tighter">
-                                                    {member.email} {member.clientId && <span className="text-emerald-500 ml-1">({member.clientId.company})</span>}
+                                                    {member.email} {member.clientId && <span className="text-primary ml-1">({member.clientId.company})</span>}
                                                 </p>
                                             </div>
                                         </div>
@@ -190,7 +190,7 @@ const TeamManagement = () => {
                                     <td className="px-8 py-5">
                                         <button
                                             onClick={() => handleStatusToggle(member._id, member.isActive)}
-                                            className={`status-badge min-w-[90px] text-center cursor-pointer transition-all active:scale-95 ${member.isActive ? 'badge-green' : 'badge-red'}`}
+                                            className={`status-badge min-w-[90px] text-center cursor-pointer transition-all active:scale-95 ${member.isActive ? 'badge-primary' : 'badge-red'}`}
                                         >
                                             {member.isActive ? 'Active' : 'Inactive'}
                                         </button>
@@ -205,14 +205,14 @@ const TeamManagement = () => {
                                                     setShowEditModal(member);
                                                     setEditData({ name: member.name, role: member.role, clientId: member.clientId?._id || "" });
                                                 }}
-                                                className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-sm transition-all"
+                                                className="p-2 text-slate-400 hover:text-primary hover:bg-primary-light rounded-sm transition-all"
                                                 title="Edit Personnel"
                                             >
                                                 <Edit size={18} />
                                             </button>
                                             <button
                                                 onClick={() => setShowPasswordModal(member._id)}
-                                                className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 rounded-sm transition-all"
+                                                className="p-2 text-slate-400 hover:text-primary hover:bg-primary-light rounded-sm transition-all"
                                                 title="Reset Password"
                                             >
                                                 <Key size={18} />
@@ -237,7 +237,7 @@ const TeamManagement = () => {
             {showAddModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
                     <div className="bg-white rounded-sm w-full max-w-lg shadow-2xl overflow-hidden relative border border-white/20">
-                        <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
+                        <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
                         <div className="p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-black text-slate-900 uppercase italic tracking-tight">Onboard Personnel</h2>
@@ -260,7 +260,7 @@ const TeamManagement = () => {
                                     <input
                                         type="email"
                                         required
-                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/50 font-bold text-slate-700"
+                                        className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 font-bold text-slate-700"
                                         placeholder="name@agency.com"
                                         value={newMember.email}
                                         onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
@@ -304,7 +304,7 @@ const TeamManagement = () => {
                                         </select>
                                     </div>
                                 )}
-                                <button type="submit" className="w-full bg-slate-900 text-white font-black py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-emerald-600 transition-all">Complete Onboarding</button>
+                                <button type="submit" className="w-full bg-slate-900 text-white font-black py-4 rounded-sm shadow-xl shadow-slate-200 uppercase italic tracking-widest hover:bg-primary transition-all">Complete Onboarding</button>
                             </form>
                         </div>
                     </div>

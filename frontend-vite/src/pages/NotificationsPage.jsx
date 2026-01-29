@@ -65,7 +65,7 @@ const NotificationsPage = () => {
                 {notifications.some(n => !n.isRead) && (
                     <button
                         onClick={markAllAsRead}
-                        className="flex items-center space-x-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium bg-emerald-50 px-3 py-2 rounded-md transition-colors"
+                        className="flex items-center space-x-2 text-sm text-primary hover:text-primary-hover font-medium bg-primary-light px-3 py-2 rounded-md transition-colors"
                     >
                         <Check size={16} />
                         <span>Mark all as read</span>
@@ -88,7 +88,7 @@ const NotificationsPage = () => {
                             key={notification._id}
                             className={`relative flex items-start p-4 rounded-lg border transition-all ${notification.isRead
                                 ? "bg-white border-slate-200"
-                                : "bg-emerald-50/50 border-emerald-100 shadow-sm"
+                                : "bg-primary-light/50 border-primary/20 shadow-sm"
                                 }`}
                         >
                             <div className={`p-2 rounded-full mr-4 ${notification.isRead ? "bg-slate-100" : "bg-white shadow-sm"}`}>
@@ -112,7 +112,7 @@ const NotificationsPage = () => {
                                 {!notification.isRead && (
                                     <button
                                         onClick={() => markAsRead(notification._id)}
-                                        className="text-xs font-medium text-emerald-600 hover:text-emerald-700 flex items-center"
+                                        className="text-xs font-medium text-primary hover:text-primary-hover flex items-center"
                                     >
                                         <Check size={12} className="mr-1" />
                                         Mark as read
@@ -121,7 +121,7 @@ const NotificationsPage = () => {
                             </div>
 
                             {!notification.isRead && (
-                                <div className="absolute top-4 right-4 w-2 h-2 bg-emerald-500 rounded-full"></div>
+                                <div className="absolute top-4 right-4 w-2 h-2 bg-primary rounded-full"></div>
                             )}
                         </div>
                     ))

@@ -6,17 +6,27 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { SocketProvider } from './context/SocketContext.jsx'
 import { AgencyProvider } from './context/AgencyContext.jsx'
+import { ClerkProvider } from '@clerk/clerk-react'
+
+// Import your Publishable Key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <AgencyProvider>
-          <SocketProvider>
-            <App />
-          </SocketProvider>
-        </AgencyProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <BrowserRouter>
+        <AuthProvider>
+          <AgencyProvider>
+            <SocketProvider>
+              <App />
+            </SocketProvider>
+          </AgencyProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ClerkProvider>
   </StrictMode>,
 )

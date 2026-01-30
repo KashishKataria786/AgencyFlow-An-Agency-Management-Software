@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { LogIn, Mail, Lock, AlertCircle, ArrowRight } from "lucide-react";
+import { SignedOut, SignInButton } from "@clerk/clerk-react";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -99,6 +100,18 @@ const LoginPage = () => {
                     <p className="mt-8 text-center text-xs font-bold text-slate-400 uppercase tracking-widest">
                         New to AgencyFlow? <Link to="/register" className="text-emerald-600 hover:text-emerald-700">Get Started</Link>
                     </p>
+
+                    <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col items-center">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Or continue with</p>
+                        <SignedOut>
+                            <SignInButton mode="modal">
+                                <button className="w-full flex items-center justify-center space-x-3 py-3 border border-slate-200 rounded-sm hover:bg-slate-50 transition-colors group">
+                                    <div className="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center text-[10px] text-white font-bold">C</div>
+                                    <span className="text-sm font-bold text-slate-700">Clerk Authentication</span>
+                                </button>
+                            </SignInButton>
+                        </SignedOut>
+                    </div>
                 </div>
             </div>
         </div>

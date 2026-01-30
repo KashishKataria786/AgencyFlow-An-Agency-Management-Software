@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true
+    },
+    clerkId: {
+      type: String,
+      unique: true,
+      sparse: true
     }
   },
   { timestamps: true }

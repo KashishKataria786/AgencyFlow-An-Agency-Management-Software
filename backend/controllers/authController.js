@@ -109,3 +109,49 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+/**
+ * CLERK SYNC - Sync Clerk User with our DB
+ */
+export const clerkSync = async (req, res) => {
+  const { clerkId, email, name } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // Create new user if not exists
+      user = await User.create({
+        name,
+        email,
+        clerkId, // We should add this field to User model
+        role: "owner", // Default to owner for new Clerk signups
+        password: Math.random().toString(36).slice(-8), // Dummy password
+      });
+    } else if (!user.clerkId) {
+      // Link clerkId if user existed (email match) but no clerkId set
+      user.clerkId = clerkId;
+      await user.save();
+    }
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role, agencyId: user.agencyId, clientId: user.clientId },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        agencyId: user.agencyId,
+        clientId: user.clientId
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

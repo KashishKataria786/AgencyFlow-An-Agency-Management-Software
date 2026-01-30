@@ -54,5 +54,10 @@ const invoiceSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// Performance Indexes
+invoiceSchema.index({ agencyId: 1, status: 1 });
+invoiceSchema.index({ clientId: 1, status: 1 });
+invoiceSchema.index({ agencyId: 1, createdAt: -1 });
+
 const Invoice = mongoose.model("Invoice", invoiceSchema);
 export default Invoice;

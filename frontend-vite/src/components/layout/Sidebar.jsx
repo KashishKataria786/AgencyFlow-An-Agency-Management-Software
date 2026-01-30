@@ -14,7 +14,8 @@ import {
     ChevronRight,
     Search,
     MessageSquare,
-    TrendingUp
+    TrendingUp,
+    BarChart3
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { useSocket } from "../../context/SocketContext";
@@ -30,6 +31,7 @@ const Sidebar = ({ role }) => {
 
     const ownerLinks = [
         { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/owner/dashboard" },
+        { name: "Analytics", icon: <BarChart3 size={20} />, path: "/owner/analytics" },
         { name: "Clients", icon: <Users size={20} />, path: "/owner/clients" },
         { name: "Projects", icon: <Briefcase size={20} />, path: "/owner/projects" },
         { name: "Tasks", icon: <CheckSquare size={20} />, path: "/owner/tasks" },

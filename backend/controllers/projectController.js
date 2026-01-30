@@ -9,7 +9,9 @@ export const getProjects = async (req, res) => {
             filter.clientId = req.user.clientId;
         }
 
-        const projects = await Project.find(filter).populate("clientId", "name company");
+        const projects = await Project.find(filter)
+            .populate("clientId", "name company")
+            .lean();
         res.status(200).json(projects);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -21,7 +23,9 @@ export const getProjectById = async (req, res) => {
         const project = await Project.findOne({
             _id: req.params.id,
             agencyId: req.user.agencyId
-        }).populate("clientId", "name company");
+        })
+            .populate("clientId", "name company")
+            .lean();
 
         if (!project) return res.status(404).json({ message: "Project not found" });
 

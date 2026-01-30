@@ -45,5 +45,10 @@ const taskSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// Performance Indexes
+taskSchema.index({ projectId: 1, status: 1 });
+taskSchema.index({ assignedTo: 1, status: 1 });
+taskSchema.index({ dueDate: 1, status: 1 });
+
 const Task = mongoose.model("Task", taskSchema);
 export default Task;

@@ -36,5 +36,10 @@ const projectSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// Performance Indexes
+projectSchema.index({ agencyId: 1, status: 1 });
+projectSchema.index({ agencyId: 1, deadline: 1 });
+projectSchema.index({ clientId: 1 });
+
 const Project = mongoose.model("Project", projectSchema);
 export default Project;

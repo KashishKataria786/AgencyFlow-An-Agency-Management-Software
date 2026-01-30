@@ -14,14 +14,17 @@ export const getTasks = async (req, res) => {
 
         // If client, only show tasks for their projects
         if (req.user.role === "client") {
-            const clientProjects = await Project.find({ clientId: req.user.clientId });
+            const clientProjects = await Project.find({ clientId: req.user.clientId })
+                .select("_id")
+                .lean();
             const projectIds = clientProjects.map(p => p._id);
             filter.projectId = { $in: projectIds };
         }
 
         const tasks = await Task.find(filter)
             .populate("assignedTo", "name")
-            .populate("projectId", "name agencyId");
+            .populate("projectId", "name agencyId")
+            .lean();
 
         // Filter out tasks where project might have been hard-deleted (orphans)
         // or where agencyId doesn't match (security)
@@ -38,7 +41,9 @@ export const getTasks = async (req, res) => {
 export const createTask = async (req, res) => {
     try {
         // Ensure project belongs to agency
-        const project = await Project.findOne({ _id: req.body.projectId, agencyId: req.user.agencyId });
+        const project = await Project.findOne({ _id: req.body.projectId, agencyId: req.user.agencyId })
+            .select("_id clientId")
+            .lean();
         if (!project) return res.status(403).json({ message: "Unauthorized project access" });
 
         const newTask = await Task.create(req.body);
@@ -160,7 +165,9 @@ export const getCapacityStats = async (req, res) => {
         console.log("Fetching capacity stats for agency:", req.user.agencyId);
 
         // First, get all projects for this agency
-        const projects = await Project.find({ agencyId: req.user.agencyId });
+        const projects = await Project.find({ agencyId: req.user.agencyId })
+            .select("_id")
+            .lean();
         const projectIds = projects.map(p => p._id);
 
         console.log(`Found ${projects.length} projects for agency`);
@@ -168,7 +175,8 @@ export const getCapacityStats = async (req, res) => {
         // Then get all tasks for those projects
         const tasks = await Task.find({ projectId: { $in: projectIds } })
             .populate("assignedTo", "name email")
-            .populate("projectId", "name");
+            .populate("projectId", "name")
+            .lean();
 
         console.log(`Found ${tasks.length} tasks for agency`);
 

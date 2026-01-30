@@ -33,5 +33,9 @@ const clientSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// Performance Indexes
+clientSchema.index({ agencyId: 1, status: 1 });
+clientSchema.index({ email: 1 });
+
 const Client = mongoose.model("Client", clientSchema);
 export default Client;

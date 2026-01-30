@@ -5,6 +5,7 @@ import cors from "cors";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import colors from "colors";
+import compression from "compression";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import connectDatabase from "./config/db.js";
@@ -16,6 +17,7 @@ import teamRoutes from "./routes/teamRoutes.js";
 import invoiceRoutes from "./routes/invoiceRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import agencyRoutes from "./routes/agencyRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -29,6 +31,8 @@ const io = new Server(httpServer, {
 });
 
 // Middlewares
+// Enable gzip compression for all responses
+app.use(compression());
 app.use((req, res, next) => {
   console.log(`Trace: ${req.method} ${req.url}`);
   next();
@@ -67,6 +71,7 @@ app.use("/api/team", teamRoutes);
 app.use("/api/invoices", invoiceRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 // Catch-all for debugging 404s
 app.use((req, res, next) => {

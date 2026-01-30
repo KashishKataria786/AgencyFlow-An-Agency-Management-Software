@@ -16,7 +16,8 @@ export const getInvoices = async (req, res) => {
         const invoices = await Invoice.find(filter)
             .populate("projectId", "name")
             .populate("clientId", "name company email")
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .lean();
 
         res.status(200).json(invoices);
     } catch (error) {
@@ -32,7 +33,8 @@ export const getInvoiceById = async (req, res) => {
         })
             .populate("projectId", "name description")
             .populate("clientId", "name company email")
-            .populate("agencyId", "name email");
+            .populate("agencyId", "name email")
+            .lean();
 
         if (!invoice) return res.status(404).json({ message: "Invoice not found" });
 
@@ -51,7 +53,9 @@ export const createInvoice = async (req, res) => {
     try {
         const { projectId, amount, items, dueDate, notes } = req.body;
 
-        const project = await Project.findById(projectId);
+        const project = await Project.findById(projectId)
+            .select("agencyId name clientId")
+            .lean();
         if (!project || project.agencyId.toString() !== req.user.agencyId.toString()) {
             return res.status(404).json({ message: "Project not found or unauthorized" });
         }
@@ -70,7 +74,9 @@ export const createInvoice = async (req, res) => {
         });
 
         // Notify client user(s)
-        const clientUsers = await User.find({ clientId: project.clientId, role: "client" });
+        const clientUsers = await User.find({ clientId: project.clientId, role: "client" })
+            .select("_id")
+            .lean();
         for (const user of clientUsers) {
             await createNotification({
                 recipient: user._id,
@@ -100,7 +106,9 @@ export const updateInvoiceStatus = async (req, res) => {
         if (!invoice) return res.status(404).json({ message: "Invoice not found" });
 
         // Notify client of status change
-        const clientUsers = await User.find({ clientId: invoice.clientId, role: "client" });
+        const clientUsers = await User.find({ clientId: invoice.clientId, role: "client" })
+            .select("_id")
+            .lean();
         for (const user of clientUsers) {
             await createNotification({
                 recipient: user._id,

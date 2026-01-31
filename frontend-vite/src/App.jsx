@@ -39,7 +39,7 @@ const ClientPortal = lazy(() => import("./pages/ClientPortal.jsx"));
 const ClientInvoices = lazy(() => import("./pages/ClientInvoices.jsx"));
 
 const RoleBasedLayout = lazy(() => import("./components/layout/RoleBasedLayout.jsx"));
-
+const NoInternet = lazy(()=>import('./components/common/NoInternet.jsx'))
 const LoadingFallback = () => (
   <div className="h-screen w-full flex items-center justify-center bg-slate-50">
     <div className="flex flex-col items-center space-y-4">
@@ -81,6 +81,7 @@ function App() {
 
   return (
     <LayoutProvider>
+      <NoInternet />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           {/* Public Routes */}
